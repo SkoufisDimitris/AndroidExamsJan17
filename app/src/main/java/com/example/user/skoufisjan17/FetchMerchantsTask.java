@@ -6,6 +6,7 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,14 +28,37 @@ public class FetchMerchantsTask extends AsyncTask<String,Void,ArrayList<Merchant
 
     private ArrayList<Merchant> getMerchantsFromJson(String merchantJsonStr) throws JSONException {
         ArrayList<Merchant> merchants = new ArrayList<>();
+
+        //  http://dev.savecash.gr:3000/Merchant/index.json?$orderby=id%20desc
         try{
             JSONArray merchantsArray = new JSONArray(merchantJsonStr);
-            //.....
 
+            for(int i = 0;  i < merchantsArray.length(); i++) {
+                String id = "";
+                String legal_name = "";
+                String merchant_category = "";
+                String contact_point = "";
+                String aggregate_rating = "";
 
+                JSONObject merchantJson = merchantsArray.getJSONObject(i);
 
+                //getting id
+                id = merchantJson.getString("id");
+                // getting the name
+                legal_name = merchantJson.getString("legalName");
+                // getting address
+                JSONObject getAddressJson = merchantJson.getJSONObject("contactPoint");
+                contact_point = getAddressJson.getString("streetAddress");
+                // getting category
+                JSONObject getCategoryJson = merchantJson.getJSONObject("merchantCategory");
+                merchant_category = getCategoryJson.getString("name");
+                // getting rating
+                JSONObject getRatingJson = merchantJson.getJSONObject("aggregateRating");
+                aggregate_rating = getRatingJson.getString("ratingValue");
 
-
+                Merchant merchant = new Merchant(id, legal_name, merchant_category, contact_point, aggregate_rating);
+                merchants.add(merchant);
+            }
             //......
             Log.d(LOG_TAG, "Merchant Fetching Complete. " + merchants.size() + "merchants inserted");
             return  merchants;
