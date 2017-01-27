@@ -139,6 +139,9 @@ public class FetchMerchantsTask extends AsyncTask<String,Void,ArrayList<Merchant
     protected void onPostExecute(ArrayList<Merchant> merchants) {
         if(merchants.size() > 0){
             this.merchantAdapter.clear();
+            for(Merchant merchant : merchants) {
+                merchantAdapter.add(merchant);
+            }
             //.....
         }
     }
