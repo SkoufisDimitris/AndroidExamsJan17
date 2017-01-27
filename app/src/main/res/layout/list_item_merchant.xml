@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:id="@+id/list_item_merchant_image"
         android:layout_weight="0"
+        android:layout_marginRight="5dp"
         />
 
     <LinearLayout
@@ -25,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:paddingBottom="8dp"
             android:id="@+id/list_item_merchant_legal_name"
             />
